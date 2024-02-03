@@ -5,8 +5,10 @@
   import AddTransaction from './components/AddTransaction.vue';
   import TransactionList from './components/TransactionList.vue';
   import {ref, computed, onMounted} from 'vue'
+  import {useToast} from 'vue-toastification'
 
   const transactions = ref([])
+  const toast = useToast()
 
   // const transactions = ref([
   //   {id: 1, text: 'Paycheck', amount: 699.99},
@@ -48,8 +50,8 @@
       text: transactionData.text,
       amount: transactionData.amount,
     })
-
     saveTransactionToLocalStorage()
+    toast.success('Transaction Added')
   }
 
   //generate unique id
@@ -61,6 +63,7 @@
   const handleTransactionDeleted = (id) => {
     transactions.value = transactions.value.filter((transaction) => transaction.id !== id)
     saveTransactionToLocalStorage()
+    toast.success('Transaction Deleted')
   }
 
   //save to local storage
@@ -77,6 +80,8 @@
       transactions.value = savedTransactions
     }
   })
+
+
 
 </script>
 
